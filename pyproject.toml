@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "csml-common"
+version = "0.1.0"
+description = ""
+authors = ["Evgenii Rechkalov <snorkysnark@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+ralsei = "^3.2.0"
+pandas = "^2.2.3"
+pydantic = "^2.9.2"
+pyyaml = "^6.0.2"
+to-file-like-obj = "^0.0.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
