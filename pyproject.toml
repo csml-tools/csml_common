@@ -7,11 +7,11 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-ralsei = "^3.2.0"
 pandas = "^2.2.3"
 pydantic = "^2.9.2"
 pyyaml = "^6.0.2"
 to-file-like-obj = "^0.0.7"
+ralsei = {path = "/home/lisk/Code/ralsei/ralsei", develop = true}
 
 
 [build-system]

@@ -6,8 +6,9 @@ import sqlalchemy.types as types
 from sqlalchemy.ext.compiler import compiles
 
 from ralsei import Table
+from ralsei.jinja import SqlEnvironment
 from ralsei.connection import ConnectionEnvironment
-from ralsei.task import TaskDef, CreateTableTask
+from ralsei.task import TaskDef, Task, TableOutput
 
 from ..config import CsvSourceGlob
 from ..padded_csv import padded_csv_reader
@@ -18,7 +19,7 @@ class RawType(types.UserDefinedType):
         self.sql = sql
 
 
-@compiles(RawType, "sqlite")
+@compiles(RawType)
 def compile_mytype_sqlite(type_: RawType, compiler, **kw):
     return type_.sql
 
@@ -29,15 +30,15 @@ class UploadCsv(TaskDef):
     index: Optional[str] = None
     read_csv_args: dict[str, Any] = field(default_factory=dict)
 
-    class Impl(CreateTableTask):
-        def prepare(self, this: "UploadCsv"):
-            self._prepare_table(this.table)
+    class Impl(Task[TableOutput]):
+        def __init__(self, this: "UploadCsv", env: SqlEnvironment) -> None:
+            self.output = TableOutput(env, this.table)
 
             self.__sources = this.sources
             self.__index = this.index
             self.__read_csv_args = this.read_csv_args
 
-        def _run(self, conn: ConnectionEnvironment):
+        def run(self, conn: ConnectionEnvironment):
             dfs = []
 
             for source in chain(*(s.expand() for s in self.__sources)):
@@ -57,12 +58,13 @@ class UploadCsv(TaskDef):
                 dtypes[self.__index] = RawType("INTEGER PRIMARY KEY")
 
             df.to_sql(
-                self._table.name,
+                self.output.table.name,
                 conn.sqlalchemy,
-                schema=self._table.schema,
+                schema=self.output.table.schema,
                 index=False,
                 dtype=dtypes,
             )
+            conn.commit()
 
 
 __all__ = ["UploadCsv"]
