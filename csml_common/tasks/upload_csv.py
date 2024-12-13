@@ -37,6 +37,9 @@ class UploadCsv(TaskDef):
             self.__sources = this.sources
             self.__index = this.index
             self.__read_csv_args = this.read_csv_args
+            self.__primary_key_str = env.dialect.meta.autoincrement_primary_key.to_sql(
+                env
+            )
 
         def run(self, conn: ConnectionEnvironment):
             dfs = []
@@ -55,7 +58,7 @@ class UploadCsv(TaskDef):
             dtypes = {}
             if self.__index:
                 df = df.reset_index(names=self.__index)
-                dtypes[self.__index] = RawType("INTEGER PRIMARY KEY")
+                dtypes[self.__index] = RawType(self.__primary_key_str)
 
             df.to_sql(
                 self.output.table.name,
@@ -65,6 +68,9 @@ class UploadCsv(TaskDef):
                 dtype=dtypes,
             )
             conn.commit()
+
+        def describe(self) -> str:
+            return f"CREATE TABLE {self.output.table}"
 
 
 __all__ = ["UploadCsv"]
