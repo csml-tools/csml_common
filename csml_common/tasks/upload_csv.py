@@ -9,6 +9,7 @@ from ralsei import Table
 from ralsei.jinja import SqlEnvironment
 from ralsei.connection import ConnectionEnvironment
 from ralsei.task import TaskDef, Task, TableOutput
+from ralsei.jinja.globals import autoincrement_primary_key
 
 from ..config import CsvSourceGlob
 from ..padded_csv import padded_csv_reader
@@ -37,9 +38,7 @@ class UploadCsv(TaskDef):
             self.__sources = this.sources
             self.__index = this.index
             self.__read_csv_args = this.read_csv_args
-            self.__primary_key_str = env.dialect.meta.autoincrement_primary_key.to_sql(
-                env
-            )
+            self.__primary_key_str = autoincrement_primary_key(env).to_sql(env)
 
         def run(self, conn: ConnectionEnvironment):
             dfs = []
@@ -68,9 +67,6 @@ class UploadCsv(TaskDef):
                 dtype=dtypes,
             )
             conn.commit()
-
-        def describe(self) -> str:
-            return f"CREATE TABLE {self.output.table}"
 
 
 __all__ = ["UploadCsv"]
