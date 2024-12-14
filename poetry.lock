@@ -617,7 +617,7 @@ description = "Build modular data pipelines running inside the postgres database
 optional = false
 python-versions = "^3.12"
 files = []
-develop = true
+develop = false
 
 [package.dependencies]
 click = "^8.1.7"
@@ -629,8 +629,10 @@ sqlalchemy = "^2.0.19"
 typer = "^0.14.0"
 
 [package.source]
-type = "directory"
-url = "../../ralsei"
+type = "git"
+url = "https://github.com/snorkysnark/ralsei-py.git"
+reference = "di"
+resolved_reference = "26d09e534fa2bc99e80de8c7921d2d16c5f03d6b"
 
 [[package]]
 name = "returns"
@@ -785,4 +787,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "0681fbc40b153d27cb375a8a808d9c9827fa67ba298b0798bef00be8a4e1edca"
+content-hash = "c191ab32621788477b42fa0608a5ef4b236a03cf11e584c38828c340c18ec5bc"
