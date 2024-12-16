@@ -631,7 +631,7 @@ typer = "^0.14.0"
 [package.source]
 type = "git"
 url = "https://github.com/snorkysnark/ralsei-py.git"
-reference = "di"
+reference = "4.0-duckdb"
 resolved_reference = "26d09e534fa2bc99e80de8c7921d2d16c5f03d6b"
 
 [[package]]
@@ -787,4 +787,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "c191ab32621788477b42fa0608a5ef4b236a03cf11e584c38828c340c18ec5bc"
+content-hash = "3c09e50378f4b667679434e0d0b136a37715d175fed9cd5f11f899ff988945c1"
