@@ -12,4 +12,16 @@ def create_yaml_loader[T: BaseModel](type_: type[T]) -> Callable[[str], T]:
     return parser
 
 
-__all__ = ["create_yaml_loader"]
+def range_parser(value: str) -> range:
+    parts = value.split("-")
+
+    if len(parts) == 2:
+        return range(int(parts[0]), int(parts[1]) + 1)
+    elif len(parts) == 1:
+        num = int(parts[0])
+        return range(num, num + 1)
+    else:
+        raise ValueError(f"{value} is not a range string expected format like '0-100'")
+
+
+__all__ = ["create_yaml_loader", "range_parser"]
