@@ -38,9 +38,9 @@ class UploadCsv(TaskDef):
             self.__sources = this.sources
             self.__index = this.index
             self.__read_csv_args = this.read_csv_args
-            self.__primary_key_str = env.resolve(
-                autoincrement_primary_key(env, this.table)
-            ).to_sql(env)
+            self.__primary_key_str = env.resolve(autoincrement_primary_key(env)).to_sql(
+                env
+            )
 
         def run(self, conn: ConnectionEnvironment):
             dfs = []

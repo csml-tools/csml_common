@@ -11,7 +11,7 @@ pandas = "^2.2.3"
 pydantic = "^2.9.2"
 pyyaml = "^6.0.2"
 to-file-like-obj = "^0.0.7"
-ralsei = {git = "https://github.com/snorkysnark/ralsei-py.git", rev = "4.0-duckdb"}
+ralsei = {git = "https://github.com/snorkysnark/ralsei-py.git", rev = "4.0"}
 
 
 [build-system]
