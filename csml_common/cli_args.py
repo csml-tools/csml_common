@@ -34,7 +34,7 @@ class RangeParamType(click.ParamType):
         self, value: Any, param: Optional[click.Parameter], ctx: Optional[click.Context]
     ) -> Any:
         if isinstance(value, range):
-            return range
+            return value
         elif isinstance(value, str):
             parts = value.split("-")
 
