@@ -8,13 +8,13 @@ from .padded_csv import HeaderLength
 
 class CsvSource(BaseModel):
     path: Path
-    header_length: HeaderLength
+    header_length: HeaderLength = 0
     remap: dict[str, str] = {}
 
 
 class CsvSourceGlob(BaseModel):
     glob: str
-    header_length: HeaderLength
+    header_length: HeaderLength = 0
     remap: dict[str, str] = {}
 
     def expand(self) -> Iterable[CsvSource]:
